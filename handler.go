@@ -2,7 +2,6 @@ package channelz
 
 import (
 	"net/http"
-	"path"
 	"sync"
 
 	channelzgrpc "google.golang.org/grpc/channelz/grpc_channelz_v1"
@@ -16,8 +15,7 @@ import (
 // Typically you'd use the return value of CreateHandler as an argument to http.Handle
 // For example:
 // 	http.Handle("/", channelz.CreateHandler("/foo", grpcBindAddress))
-func CreateHandler(pathPrefix, grpcBindAddress string) http.Handler {
-	prefix := path.Join(pathPrefix, "channelz") + "/"
+func CreateHandler(prefix, grpcBindAddress string) http.Handler {
 	handler := &grpcChannelzHandler{bindAddress: grpcBindAddress}
 	return createRouter(prefix, handler)
 }
